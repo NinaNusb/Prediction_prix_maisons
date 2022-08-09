@@ -6,10 +6,10 @@ Creating the app for the house prices prediction
 import pandas as pd
 import streamlit as st
 import numpy as np
+import pickle
 
-
-df= pd.read_csv("data_cleaning_analysis.csv")
-
+with open("pickle_model.pkl", 'rb') as file:
+    model = pickle.load(file)
 
 
 # Titre de la page
@@ -24,11 +24,10 @@ st.number_input("Entrez le code postal du quartier dans lequel vous cherchez une
 
 
 st.subheader('Carte de tous les quartiers')
-map_data = pd.DataFrame(
-    np.random.randn(1000, 2) / [50, 50] + [47.7776, -121.315],
-    columns=['lat', 'lon'])
-
-st.map(map_data)
+df1 = pd.read_csv('kc_house_data.csv')
+df1['lon'] = df1['long']
+columns=['latitude', 'longitude']
+st.map(df1)
 
 # Nb chambres
 st.subheader('Nombre de chambre')
@@ -102,4 +101,4 @@ st.button("Trouver")
 
 if(st.button("Trouver")):
     # prix = ??
-    st.success(prix)
+    st.success(model.predict())

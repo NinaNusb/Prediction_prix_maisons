@@ -20,8 +20,7 @@ st.header("Vous cherchez une maison dans la ville de Seattle? Ajustez les param�
 
 # zipcode
 st.subheader('Code postal')
-st.number_input("Entrez le code postal du quartier dans lequel vous cherchez une maison")
-
+zipcode = st.number_input("Entrez le code postal du quartier dans lequel vous cherchez une maison", 98001, 98100)
 
 st.subheader('Carte de tous les quartiers')
 df1 = pd.read_csv('kc_house_data.csv')
@@ -73,11 +72,13 @@ waterfront = st.radio(
      "Voulez-vous être au bord de l'eau?",
      ('Oui', 'Non'))
 
-if waterfront == 'Oui':
-     st.write("Vous avez choisi d'être au bord de l'eau")
-else:
-     st.write("Vous ne souhaitez pas être au bord de l'eau")
 
+if waterfront == 'Oui':
+    waterfront = 1
+    st.write("Vous avez choisi d'être au bord de l'eau")
+else:
+    waterfront = 0
+    st.write("Vous ne souhaitez pas être au bord de l'eau")
 
 # View
 st.subheader("Qualité de la vue")
@@ -93,12 +94,18 @@ yr_built = st.slider("Choisissez un nombre", 1900, 2015)
 # yr_renovated
 st.subheader("Année de rénovation")
 st.text("Si vous ne souhaitez pas de maison rénovée, indiquez 0")
-yr_renovated = st.number_input("Choisissez un nombre")
+yr_renovated = st.number_input("Choisissez un nombre", 0,2015)
 
+variables= [bedrooms, bathrooms, sqft_living, sqft_lot, floors, waterfront, view, condition, grade, int(yr_built), int(yr_renovated), str(zipcode)]
+
+colonnes = ['bedrooms', 'bathrooms', 'sqft_living', 'sqft_lot', 'floors',
+       'waterfront', 'view', 'condition', 'grade', 'yr_built',
+       'yr_renovated', 'zipcode']
+
+prediction = pd.DataFrame(np.array(variables).reshape(1,-1), columns=colonnes)
 
 # Trouver la prédiction
-st.button("Trouver")
-
-if(st.button("Trouver")):
-    # prix = ??
-    st.success(model.predict())
+if(st.button("Estimer")):
+    prix = int(model.predict(prediction))
+    st.write("Résumé des paramètres", prediction)
+    st.success("La prédiction est de: {} $".format(prix))

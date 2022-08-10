@@ -8,7 +8,7 @@ import streamlit as st
 import numpy as np
 import pickle
 
-with open("../.ipynb_checkpoints/pickle_model.pkl", 'rb') as file:
+with open("pickle_model.pkl", 'rb') as file:
     model = pickle.load(file)
 
 
@@ -23,7 +23,7 @@ st.subheader('Code postal')
 zipcode = st.number_input("Entrez le code postal du quartier dans lequel vous cherchez une maison", 98001, 98100)
 
 st.subheader('Carte de tous les quartiers')
-df1 = pd.read_csv('../.ipynb_checkpoints/kc_house_data.csv')
+df1 = pd.read_csv('kc_house_data.csv')
 df1['lon'] = df1['long']
 columns=['latitude', 'longitude']
 st.map(df1)

@@ -18,7 +18,7 @@ Créer l'application grâce à la librairie Streamlit puis l'héberger sur Herok
   - **Git** - Logiciel de gestion.
   - **GitHub** - Site web et service de cloud pour stocker et gérer le code.
   - **Python** - Langage de programmation interprété.
-  - ** Streamlit ** - Librairie de création d'application
+  - **Streamlit** - Librairie de création d'application
 
 ## Version
   Dernière version: 1.0
